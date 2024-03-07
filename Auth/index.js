@@ -1,9 +1,8 @@
-import 'dotenv/config'
-import axios from 'axios'
-import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
-
 const express = require("express");
 const router = express.Router();
+// import 'dotenv/config'
+const {axios} = require("axios");
+const {ClerkExpressRequireAuth} = require("@clerk/clerk-sdk-node");
 
 const config = {
     postUrl: 'https://jsonplaceholder.typicode.com/posts',
@@ -18,4 +17,5 @@ console.log('REQUEST AUTH: ', req.auth)
     } catch (err) {
       console.error('Error: ', err)
     }
-})  
+})
+module.exports = router;
