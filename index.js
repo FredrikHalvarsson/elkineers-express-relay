@@ -6,7 +6,7 @@ const app = express();
 const port = 3001;
 
 const notion = require("./notion");
-
+const auth = require("./Auth");
 app.use(express.json());
 
 const whitelist = ['http://127.0.0.1', 'http://127.0.0.1:5500', 'https://www.notion.so/Elkineers-6f642cd872e74b21a5d479153768b844'];
@@ -33,6 +33,6 @@ app.use(limiter);
 app.get("/", (req, res) => res.json({success: "Hello World!" }));
 
 app.use("/notion/api", notion);
-
+app.use("/auth", auth);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
