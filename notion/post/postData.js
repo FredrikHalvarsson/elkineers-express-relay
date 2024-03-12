@@ -8,6 +8,7 @@ router.use(bodyParser.json());
 //POST TIMEREPORTS
 router.post('/timereports', async (req, res)=>{
     try {
+        const notionDatabaseId = process.env.DATABASE_ID_TIMEREPORTS;
         const { name, email } = req.body;
 
         const data = {
@@ -19,8 +20,9 @@ router.post('/timereports', async (req, res)=>{
             }
         };
 
-       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/databases/${process.env.DATABASE_ID_TIMEREPORTS}/query`, {
+       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/pages`, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.NOTION_TOKEN}`, 
                 'Notion-Version': '2022-06-28' 
             },
@@ -43,6 +45,7 @@ router.post('/timereports', async (req, res)=>{
 //POST PROJECTS
 router.post('/projects', async (req, res)=>{
     try {
+        const notionDatabaseId = process.env.DATABASE_ID_PROJECTS;
         const { name, email } = req.body;
 
         const data = {
@@ -54,8 +57,9 @@ router.post('/projects', async (req, res)=>{
             }
         };
 
-       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/databases/${process.env.DATABASE_ID_PROJECTS}/query`, {
+       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/pages`, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.NOTION_TOKEN}`, 
                 'Notion-Version': '2022-06-28' 
             },
@@ -78,6 +82,7 @@ router.post('/projects', async (req, res)=>{
 //POST PEOPLE
 router.post('/people', async (req, res)=>{
     try {
+        const notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
         const { name, email } = req.body;
 
         const data = {
@@ -89,8 +94,9 @@ router.post('/people', async (req, res)=>{
             }
         };
 
-       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/databases/${process.env.DATABASE_ID_PEOPLE}/query`, {
+       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/pages`, {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.NOTION_TOKEN}`, 
                 'Notion-Version': '2022-06-28' 
             },
