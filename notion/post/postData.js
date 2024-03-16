@@ -80,34 +80,42 @@ router.post('/projects', async (req, res)=>{
 });
 
 //POST PEOPLE
-router.post('/people', async (req, res)=>{
+//POST PEOPLE
+router.post('/people', async (req, res) => {
     try {
+        
+        console.log(req.body)
         const notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
-        const { name, email } = req.body;
+        const name  = new String (req.body.name);
+        console.log(req.body)
+        console.log(name)
 
-        const data = {
-            parent: { database_id: notionDatabaseId },
-            properties: {
-                Name: { title: [{ text: { content: name } }] },
-                Email: { email: email }
-                // Ändra data till det som ska postas
+const data = {
+    parent: { database_id: notionDatabaseId },
+    properties: {
+        Name: {
+            title: [
+                {
+                    text: {
+                        content: name
+                    },
+                },
+            ],
+        },
+    }
+};
+
+        const result = await axios.post(
+            `${process.env.NOTION_API_BASE_URL}/pages`,
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${process.env.NOTION_TOKEN}`,
+                    'Notion-Version': '2022-06-28'
+                }
             }
-        };
-
-       const result = await axios.post(`${process.env.NOTION_API_BASE_URL}/pages`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.NOTION_TOKEN}`, 
-                'Notion-Version': '2022-06-28' 
-            },
-            body: JSON.stringify(data)
-        });
-
-        if(result.status !== 200) {
-          const error = await result.json();
-          console.error('Got error saving data', error);
-          return res.status(500).json({ error: error.message });
-        }
+        );
 
         res.status(200).json({ message: 'Data saved to Notion!' });
     } catch (error) {
@@ -115,5 +123,7 @@ router.post('/people', async (req, res)=>{
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+module.exports = router;
 
 module.exports = router
