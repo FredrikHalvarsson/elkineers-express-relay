@@ -86,9 +86,21 @@ router.post('/people', async (req, res) => {
         
         console.log(req.body)
         const notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
-        const name  = new String (req.body.name);
+        //const name  = new String (req.body.name);
+        //const parsedBody = JSON.parse(req.body.name);
+        //const name = parsedBody.name;
+        //const { name } = req.body.name;
+        const bodyObject = JSON.parse(req.body.body); // Parsing the JSON string in req.body.body
+
+  // Now you can access the `name` property from the parsed object
+        const { name } = bodyObject;
+
+  console.log('Name:', name);
+        
         console.log(req.body.name)
+        console.log(req.body)
         console.log(name)
+        
 
 const data = {
     parent: { database_id: notionDatabaseId },
