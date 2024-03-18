@@ -87,7 +87,7 @@ router.post('/people', async (req, res) => {
         console.log(req.body)
         const notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
         const name  = new String (req.body.name);
-        console.log(req.body)
+        console.log(req.body.name)
         console.log(name)
 
 const data = {
