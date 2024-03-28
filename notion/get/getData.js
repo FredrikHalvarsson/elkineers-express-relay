@@ -17,56 +17,86 @@ const filter = {
         ]
 }
 
-
-//GET TIMEREPORTS
-router.get('/timereports', async (req, res)=>{
+router.get('/:database', async (req, res)=>{
     try 
-    {
-    const response = await notion.databases.query({
-        database_id: process.env.DATABASE_ID_TIMEREPORTS
-    });
-    console.log('success')
-    res.send(response)
-    } catch (error) 
-    { 
-        console.log(error);
-        res.status(500).json({message: 'Server error'});
-    } 
-});
-//GET PROJECTS
-router.get('/projects', async (req, res)=>{
-    try 
-    {
-    const response = await notion.databases.query({
-        database_id: process.env.DATABASE_ID_PROJECTS
-    });
-    console.log('success')
-    res.send(response)
-    } catch (error) 
-    { 
-        console.log(error);
-        res.status(500).json({message: 'Server error'});
-    } 
-});
-//GET PEOPLE
-router.get('/people', async (req, res)=>{
-    try 
-    {
-    const response = await notion.databases.query({
-        database_id: process.env.DATABASE_ID_PEOPLE
-    });
-    console.log('success')
-    res.send(response)
-    } catch (error) 
-    { 
-        console.log(error);
-        res.status(500).json({message: 'Server error'});
-    } 
+        {
+        const database = req.params.database; // Extract database parameter from URL
+        let notionDatabaseId;
+        switch (database) {
+            case 'timereports':
+                notionDatabaseId = process.env.DATABASE_ID_TIMEREPORTS;
+                break;
+            case 'people':
+                notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
+                break;
+            case 'projects':
+                notionDatabaseId = process.env.DATABASE_ID_PROJECTS;
+                break;
+            default:
+                notionDatabaseId = process.env.DATABASE_ID_PEOPLE;
+                break;
+        }
+        const response = await notion.databases.query({
+            database_id: notionDatabaseId
+        });
+        console.log('success')
+        res.send(response)
+        } catch (error) 
+        { 
+            console.log(error);
+            res.status(500).json({message: 'Server error'});
+        }
 });
 
 module.exports = router
 
 //*********************** -Legacy Code- **************************** */
+// //GET TIMEREPORTS
+// router.get('/timereports', async (req, res)=>{
+//     try 
+//     {
+//     const response = await notion.databases.query({
+//         database_id: process.env.DATABASE_ID_TIMEREPORTS
+//     });
+//     console.log('success')
+//     res.send(response)
+//     } catch (error) 
+//     { 
+//         console.log(error);
+//         res.status(500).json({message: 'Server error'});
+//     } 
+// });
+// //GET PROJECTS
+// router.get('/projects', async (req, res)=>{
+//     try 
+//     {
+//     const response = await notion.databases.query({
+//         database_id: process.env.DATABASE_ID_PROJECTS
+//     });
+//     console.log('success')
+//     res.send(response)
+//     } catch (error) 
+//     { 
+//         console.log(error);
+//         res.status(500).json({message: 'Server error'});
+//     } 
+// });
+// //GET PEOPLE
+// router.get('/people', async (req, res)=>{
+//     try 
+//     {
+//     const response = await notion.databases.query({
+//         database_id: process.env.DATABASE_ID_PEOPLE
+//     });
+//     console.log('success')
+//     res.send(response)
+//     } catch (error) 
+//     { 
+//         console.log(error);
+//         res.status(500).json({message: 'Server error'});
+//     } 
+// });
+////////////////////////////
 //GET TIMEREPORTS
 // router.post('/timereports', async (req, res)=>{
 //     try 
