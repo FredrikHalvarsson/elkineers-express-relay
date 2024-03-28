@@ -15,3 +15,4 @@ app.use("/notion/api", notion);
 app.use("/auth", auth);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
+//Hosting on cyclic https://easy-teal-adder-ring.cyclic.app
